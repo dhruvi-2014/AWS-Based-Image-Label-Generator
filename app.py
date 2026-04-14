@@ -8,7 +8,7 @@ import pandas as pd
 s3 = boto3.client('s3')
 rekognition = boto3.client('rekognition')
 
-BUCKET = "image-label-generator-dhruvii"  # 🔁 replace
+BUCKET = "YOUR BUCKET NAME"  # 🔁 replace
 
 # Upload
 def upload_to_s3(file, filename):
@@ -45,7 +45,7 @@ def draw_boxes(image, labels):
 
 st.set_page_config(page_title="AI Image Label Generator", layout="centered")
 
-# 💗 Baby Pink Theme (clean, no white boxes)
+
 st.markdown("""
 <style>
 .stApp {
@@ -79,7 +79,7 @@ uploaded_file = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
 if uploaded_file:
 
     uploaded_file.seek(0)
-    image = Image.open(uploaded_file)
+    image = Image.open(uploaded_file).convert("RGB")
 
     st.image(image, caption="Preview", width=300)
 
@@ -109,7 +109,7 @@ if uploaded_file:
                 name = label['Name']
                 confidence = round(label['Confidence'], 2)
 
-                # ✅ Bold text, no emoji
+                
                 st.markdown(f"**{name} ({confidence}%)**")
                 st.progress(int(confidence))
 
